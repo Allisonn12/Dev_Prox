@@ -24,3 +24,7 @@ Included in the above projects are 4 main folders, namely:
       
       1. read_csv() function / method, which reads the CSV file and imports to database
       2. csv_imports() which imports the entire CSV file to the database
+    
+    
+In order to use the system a local server is required (Xampp / Wamp),
+You can import the file in your cpanel on your localhost using a file called "Connection.sql" found inside the inc/ folder
