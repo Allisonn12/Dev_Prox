@@ -27,13 +27,11 @@
       if (empty($names)){
         $error .= "<p>Please enter a name!!!</p>";
       }else{
-        // $names = clean_text($names);
         $names;
       }
       if (empty($surnames)){
         $error .= "<p>Please enter surname</p>";
       }else{
-        // $surname = clean_text($surnames);
         $surname;
       }
 
@@ -77,7 +75,6 @@
       $this->csv = $csv;
       $target = "../database_uploads/".basename($_FILES['csv_file']['name']);
 
-      // $filename = $_FILES['name']['output.csv'];
 
       $filename = $_FILES["csv_file"]["name"];
 
