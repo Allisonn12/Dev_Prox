@@ -16,137 +16,7 @@
 
     public function wite_to_csv($names, $surnames, $age, $dob){
 
-      $fnames = array(
-        "0" => array(
-          "Name" => "Names"
-        ),
-        "1" => array(
-          "Name" => "Aiden"
-        ),
-        "2" => array(
-          "Name" => "Chuck"
-        ),
-        "3" => array(
-          "Name" => "Remy"
-        ),
-        "4" => array(
-          "Name" => "Britney"
-        ),
-        "5" => array(
-          "Name" => "Fred"
-        ),
-        "6" => array(
-          "Name" => "Rae"
-        ),
-        "7" => array(
-          "Name" => "Leslie"
-        ),
-        "8" => array(
-          "Name" => "Darlene"
-        ),
-        "9" => array(
-          "Name" => "Enoch"
-        ),
-        "10" => array(
-          "Name" => "Carter"
-        ),
-        "11" => array(
-          "Name" => "Lexi"
-        ),
-        "12" => array(
-          "Name" => "Bree"
-        ),
-        "13" => array(
-          "Name" => "Benjamin"
-        ),
-        "14" => array(
-          "Name" => "Alexander"
-        ),
-        "15" => array(
-          "Name" => "Bart"
-        ),
-        "16" => array(
-          "Name" => "Winnie"
-        ),
-        "17" => array(
-          "Name" => "Wade"
-        ),
-        "18" => array(
-          "Name" => "Liam"
-        ),
-        "19" => array(
-          "Name" => "Clint"
-        ),
-        "20" => array(
-          "Name" => "Hlabi"
-        )
-      );
-      $lname = array(
-        "20" => array(
-          "Surname" => "Surname"
-        ),
-        "1" => array(
-          "Surname" => "Yang"
-        ),
-        "2" => array(
-          "Surname" => "Glynn"
-        ),
-        "3" => array(
-          "Surname" => "Knight"
-        ),
-        "4" => array(
-          "Surname" => "Wilkinson"
-        ),
-        "5" => array(
-          "Surname" => "Weasley"
-        ),
-        "6" => array(
-          "Surname" => "Evans"
-        ),
-        "7" => array(
-          "Surname" => "Parker"
-        ),
-        "8" => array(
-          "Surname" => "Ianson"
-        ),
-        "9" => array(
-          "Surname" => "Matthews"
-        ),
-        "10" => array(
-          "Surname" => "Clifton"
-        ),
-        "11" => array(
-          "Surname" => "Dempsey"
-        ),
-        "12" => array(
-          "Surname" => "Hope"
-        ),
-        "13" => array(
-          "Surname" => "Skinner"
-        ),
-        "14" => array(
-          "Surname" => "Oakley"
-        ),
-        "15" => array(
-          "Surname" => "Wilde"
-        ),
-        "16" => array(
-          "Surname" => "Hepburn"
-        ),
-        "17" => array(
-          "Surname" => "Norman"
-        ),
-        "18" => array(
-          "Surname" => "Patel"
-        ),
-        "19" => array(
-          "Surname" => "Jameson"
-        ),
-        "20" => array(
-          "Surname" => "Norburn"
-        )
-      );
-
+      
       $error = '';
       $this->names = $names;
       $this->surnames = $surnames;
@@ -249,7 +119,7 @@
   public function arrayCom(){
 
 
-    $path = fopen("../output/out.csv","w");
+    $path = fopen("../output/out.csv","a");
 
 
     $first_names = array("Aiden","Chuck", "Remy", "Britney","Britney","Fred","Rae","Leslie",
@@ -263,48 +133,61 @@
       "2009-09-09","1991-02-15","1960-04-11","1950-04-10",
       "1956-11-28","1947-07-01","1982-05-14","2019-01-29","1992-05-26","1953-06-15",
       "2015-01-17","1946-10-23","2008-06-26","1961-09-12","2009-09-30","2007-11-30",
-      "2002-10-13","2019-04-29","1964-10-07","1967-02-22","1967-06-14","1987-04-22"
+      "2002-10-13","2019-04-29","1964-10-07","1967-02-22"
     );
 
 
-    // $age = array(calculate_age($dob));
-    $age = array(calculate_age($dob));
-    // $initials = substr($first_names,0, 1);
+
+
     $mi = new MultipleIterator();
     $mi->attachIterator(new ArrayIterator($first_names));
     $mi->attachIterator(new ArrayIterator($last_names));
     $mi->attachIterator(new ArrayIterator($dob));
-    $mi->attachIterator(new ArrayIterator($age));
-    // $mi->attachIterator(new ArrayIterator($initials));
+    // $mi->attachIterator(new ArrayIterator($age));
+    // $mi->attachIterator(new ArrayIterator($this->cal_age()));
     $c = array();
     foreach($mi as $row) {
-        $c[] = $row[0] . "','" . $row[1] ."','".$row[2]."','".$row[3];
+       
+        // Use substring to select the first letter of the name and store as initials
+        $initials = substr($row[0],0,1);
+        $data = array(
+          array(
+            "Name" => $row[0],
+            "Surname" => $row[1],
+            "Initials" => $initials,
+            "Age" => $this->cal_age($dob),
+            "Date of Birth" => $row[2]
+          )
+    
+        );
+
+        var_dump($data);
         fputcsv($path,$row);
     }
-
     var_dump($c);
     fclose($path);
 
   }
 
 
-  function calculate_age($age){
-   $dob = array(
-     "2009-09-09","1991-02-15","1960-04-11","1950-04-10",
-     "1956-11-28","1947-07-01","1982-05-14","2019-01-29","1992-05-26","1953-06-15",
-     "2015-01-17","1946-10-23","2008-06-26","1961-09-12","2009-09-30","2007-11-30",
-     "2002-10-13","2019-04-29","1964-10-07","1967-02-22","1967-06-14","1987-04-22"
-   );
-   $arrObject = new ArrayObject($dob);
-   $arrayIterator = $arrObject->getIterator();
+  function cal_age($age){
 
-   $cDate = Date("Y-m-d");
-   foreach ($arrayIterator as $value){
-     $diff = date_diff(date_create($value), date_create($cDate));
-     // $arr = array();
-     echo $diff->format("%Y years");
-   }
+      $dob = array(
+        "2009-09-09","1991-02-15","1960-04-11","1950-04-10",
+        "1956-11-28","1947-07-01","1982-05-14","2019-01-29","1992-05-26",
+        "1953-06-15","2015-01-17","1946-10-23","2008-06-26","1961-09-12",
+        "2009-09-30","2007-11-30","2002-10-13","2019-04-29","1964-10-07",
+        "1967-02-22"
+      );
+      $mi = new MultipleIterator();
+      $mi->attachIterator(new ArrayIterator($dob));
 
+      $cDate = Date("Y-m-d");
+      foreach ($mi as $value){
+        $decode = implode(" ", $value);
+        $dob = date_diff(date_create($decode), date_create($cDate));
+        return $dob->format("%Y years")."<br/>";
+      }
   }
 
 
