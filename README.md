@@ -17,7 +17,7 @@ Included in the above projects are 4 main folders, namely:
    1. Config.php 
       Connection to the database.
    2. Function.php
-      This file inherits values from the usercsv.php 
+      This file inherits values from the objects.php 
    3. Connection.sql
       Import this file on your Xampp (phpmyadmin)server->import->choose file->"import".
       It will create the database and tables needs to run the application.
